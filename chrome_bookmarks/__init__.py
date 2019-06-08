@@ -3,6 +3,7 @@ import datetime
 import json
 import os
 import public
+import sys
 
 
 @public.add
@@ -84,15 +85,23 @@ class Bookmarks:
 
 
 paths = [
-    "~/Library/Application Support/Google/Chrome/Default/Bookmarks",
-    "~/.config/google-chrome/Default/Bookmarks",
-    "~\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks"
+    os.path.expanduser("~/.config/google-chrome/Default/Bookmarks"),
+    os.path.expanduser("~/Library/Application Support/Google/Chrome/Default/Bookmarks"),
+    os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks")
 ]
+path = ""
+if "linux" in sys.platform.lower():
+    path = "~/.config/google-chrome/Default/Bookmarks"
+if "darwin" in sys.platform.lower():
+    path = "~/Library/Application Support/Google/Chrome/Default/Bookmarks"
+if "win32" in sys.platform.lower():
+    path = "~\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks"
+path = os.path.expanduser(path)
+
 folders = []
 urls = []
 
-for path in paths:
-    path = os.path.expanduser(path)
-    if os.path.exists(path):
-        folders = Bookmarks(path).folders
-        urls = Bookmarks(path).urls
+for f in paths:
+    if os.path.exists(f):
+        folders = Bookmarks(f).folders
+        urls = Bookmarks(f).urls
