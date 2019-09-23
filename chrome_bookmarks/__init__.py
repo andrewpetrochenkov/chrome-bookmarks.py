@@ -62,26 +62,31 @@ class Bookmarks:
     def __init__(self, path):
         self.path = path
         self.data = json.loads(open(path).read())
+        self.attrList = self.processRoots()
+        self.urls = self.attrList["urls"]
+        self.folders = self.attrList["folders"]
 
-    @property
-    def folders(self):
-        items = []
-        for key, childrens in json.loads(open(path).read())["roots"]["bookmark_bar"].items():
-            if key == "children":
-                for children in childrens:
-                    if "type" in children and children["type"] == "folder":
-                        items.append(Item(children))
-        return items
+    def processRoots(self):
+        attrList = {"urls" : [], "folders" : []}
+        for key, value in json.loads(open(path).read())["roots"].items():
+            if "children" in value:
+                self.processTree(attrList, value["children"])
+        return attrList
 
-    @property
-    def urls(self):
-        items = []
-        for key, childrens in self.data["roots"]["bookmark_bar"].items():
-            if key == "children":
-                for children in childrens:
-                    if "type" in children and children["type"] == "url":
-                        items.append(Item(children))
-        return items
+    def processTree(self, attrList, childrenList):
+        for item in childrenList:
+            self.processUrls(item, attrList, childrenList)
+            self.processFolders(item, attrList, childrenList)
+
+    def processUrls(self, item, attrList, childrenList):
+        if "type" in item and item["type"] == "url":
+            attrList["urls"].append(Item(item))
+
+    def processFolders(self, item, attrList, childrenList):
+        if "type" in item and item["type"] == "folder":
+            attrList["folders"].append(Item(item))
+            if "children" in item:
+                self.processTree(attrList, item["children"])
 
 
 paths = [
@@ -103,5 +108,6 @@ urls = []
 
 for f in paths:
     if os.path.exists(f):
-        folders = Bookmarks(f).folders
-        urls = Bookmarks(f).urls
+        instance = Bookmarks(f)
+        folders = instance.folders
+        urls = instance.urls
