@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-import datetime
+
+from datetime import datetime, timezone, timedelta
 import json
 import os
 import public
 import sys
 
+
+def dateFromWebkit(timestamp):
+    epochStart = datetime(1601,1,1)
+    delta = timedelta(microseconds=int(timestamp))
+    return (epochStart + delta).replace(tzinfo=timezone.utc).astimezone()
 
 @public.add
 class Item(dict):
@@ -30,12 +36,12 @@ class Item(dict):
 
     @property
     def added(self):
-        return datetime.datetime.fromtimestamp(self["date_added"])
+        return dateFromWebkit(self["date_added"])
 
     @property
     def modified(self):
         if "date_modified" in self:
-            datetime.datetime.fromtimestamp(self["date_modified"])
+            return dateFromWebkit(self["date_modified"])
 
     @property
     def folders(self):

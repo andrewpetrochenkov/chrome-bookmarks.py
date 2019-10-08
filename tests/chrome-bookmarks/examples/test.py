@@ -8,3 +8,4 @@ for folder in chrome_bookmarks.folders:
 print("urls (%s):" % len(chrome_bookmarks.urls))
 for url in chrome_bookmarks.urls:
     print(url.url)
+    
