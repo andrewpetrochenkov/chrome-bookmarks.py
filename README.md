@@ -1,13 +1,13 @@
 <!--
-https://pypi.org/project/readme-generator/
-https://pypi.org/project/python-readme-generator/
+https://readme42.com
 -->
 
-[![](https://img.shields.io/pypi/pyversions/chrome-bookmarks.svg?longCache=True)](https://pypi.org/project/chrome-bookmarks/)
-[![](https://img.shields.io/pypi/v/chrome-bookmarks.svg?maxAge=3600)](https://pypi.org/project/chrome-bookmarks/)
-[![Travis](https://api.travis-ci.org/looking-for-a-job/chrome-bookmarks.py.svg?branch=master)](https://travis-ci.org/looking-for-a-job/chrome-bookmarks.py/)
 
-#### Installation
+[![](https://img.shields.io/pypi/v/chrome-bookmarks.svg?maxAge=3600)](https://pypi.org/project/chrome-bookmarks/)
+[![](https://img.shields.io/badge/License-Unlicense-blue.svg?longCache=True)](https://unlicense.org/)
+[![](https://github.com/andrewp-as-is/chrome-bookmarks.py/workflows/tests42/badge.svg)](https://github.com/andrewp-as-is/chrome-bookmarks.py/actions)
+
+### Installation
 ```bash
 $ [sudo] pip install chrome-bookmarks
 ```
@@ -18,12 +18,6 @@ OS|path
 `Linux`|`~/.config/google-chrome/Default/Bookmarks`
 `macOS`|`~/Library/Application Support/Google/Chrome/Default/Bookmarks`
 `Windows`|`~\AppData\Local\Google\Chrome\User Data\Default\Bookmarks`
-
-#### Classes
-class|`__doc__`
--|-
-`chrome_bookmarks.Bookmarks` |Bookmarks class. attrs: `path`. properties: `folders`, `urls`
-`chrome_bookmarks.Item` |Item class, dict based. properties: `id`, `name`, `type`, `url`, `folders`, `urls`
 
 #### Examples
 ```python
@@ -40,5 +34,5 @@ for url in chrome_bookmarks.urls:
 ```
 
 <p align="center">
-    <a href="https://pypi.org/project/python-readme-generator/">python-readme-generator</a>
+    <a href="https://readme42.com/">readme42.com</a>
 </p>

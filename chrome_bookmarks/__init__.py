@@ -1,18 +1,18 @@
-#!/usr/bin/env python
+__all__ = ['Item', 'Bookmarks']
+
 
 from datetime import datetime, timezone, timedelta
 import json
 import os
-import public
 import sys
 
 
 def dateFromWebkit(timestamp):
-    epochStart = datetime(1601,1,1)
+    epochStart = datetime(1601, 1, 1)
     delta = timedelta(microseconds=int(timestamp))
     return (epochStart + delta).replace(tzinfo=timezone.utc).astimezone()
 
-@public.add
+
 class Item(dict):
     """Item class, dict based. properties: `id`, `name`, `type`, `url`, `folders`, `urls`"""
 
@@ -73,7 +73,7 @@ class Bookmarks:
         self.folders = self.attrList["folders"]
 
     def processRoots(self):
-        attrList = {"urls" : [], "folders" : []}
+        attrList = {"urls": [], "folders": []}
         for key, value in json.loads(open(path).read())["roots"].items():
             if "children" in value:
                 self.processTree(attrList, value["children"])
@@ -97,8 +97,10 @@ class Bookmarks:
 
 paths = [
     os.path.expanduser("~/.config/google-chrome/Default/Bookmarks"),
-    os.path.expanduser("~/Library/Application Support/Google/Chrome/Default/Bookmarks"),
-    os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks")
+    os.path.expanduser(
+        "~/Library/Application Support/Google/Chrome/Default/Bookmarks"),
+    os.path.expanduser(
+        "~\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks")
 ]
 path = ""
 if "linux" in sys.platform.lower():
