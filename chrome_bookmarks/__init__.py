@@ -60,7 +60,6 @@ class Item(dict):
         return items
 
 
-@public.add
 class Bookmarks:
     """Bookmarks class. attrs: `path`. properties: `folders`, `urls`"""
     path = None
