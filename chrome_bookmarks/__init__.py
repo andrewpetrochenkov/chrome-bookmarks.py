@@ -66,14 +66,17 @@ class Bookmarks:
 
     def __init__(self, path):
         self.path = path
-        self.data = json.loads(open(path).read())
+        with open(path, encoding="utf-8") as f:
+            self.data = json.load(f)
         self.attrList = self.processRoots()
         self.urls = self.attrList["urls"]
         self.folders = self.attrList["folders"]
 
     def processRoots(self):
         attrList = {"urls": [], "folders": []}
-        for key, value in json.loads(open(path).read())["roots"].items():
+        with open(path, encoding="utf-8") as f:
+            roots_data = json.load(f)
+        for key, value in roots_data["roots"].items():
             if "children" in value:
                 self.processTree(attrList, value["children"])
         return attrList
